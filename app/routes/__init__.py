@@ -1,7 +1,10 @@
-from flask import Flask, Blueprint
+from flask import Flask
 
-bp_main = Blueprint("matriz", __name__, url_prefix='categories')
+def init_app(app: Flask) -> None:
+    # Registrando a blueprint de estados
+    from .estado_blueprint import bp as bp_estados
+    app.register_blueprint(bp_estados)
 
-def init_app(app: Flask):
-    
-    app.register_blueprint(bp_main)
+    # Registrando a blueprint de capitais
+    from .capital_blueprint import bp as bp_capitais
+    app.register_blueprint(bp_capitais)
