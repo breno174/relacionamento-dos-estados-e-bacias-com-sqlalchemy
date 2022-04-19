@@ -9,3 +9,6 @@ def init_app(app: Flask):
     # Estamos criando um atributo db em app, que armazenará nossa instância
     # de db para que tenhamos uma maior facilidade no desenvolvimento
     app.db = db
+
+    from app.models.estado_model import EstadoModel
+    from app.models.capital_model import CapitalModel
