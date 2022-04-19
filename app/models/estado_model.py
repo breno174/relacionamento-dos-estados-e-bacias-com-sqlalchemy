@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from app.configs.database import db
 
 class EstadoModel(db.Model):
@@ -10,3 +10,9 @@ class EstadoModel(db.Model):
     sigla = Column(String(2), nullable=False, unique=True)
     populacao = Column(Integer)
     area = Column(Float)
+    
+    # Definição da relação com a tabela regioes
+    regiao_id = Column(
+      Integer, 
+      ForeignKey('regioes.id')
+    )
