@@ -1,7 +1,7 @@
 from flask import request, current_app, jsonify
 from app.models.regiao_model import RegiaoModel
 from app.models.estado_model import EstadoModel
-
+from app.models.bacia_hidro_model import BaciaHidroModel
 
 def create_estado():
     # Aqui, utilizamos do artifício criado em nosso app/configs/database.py.
@@ -22,7 +22,18 @@ def create_estado():
     # Adicionando o id da região para fazer a criação do estado
     data['regiao_id'] = regiao.id
 
+
+    # Retiramos o nome da bacia do nosso JSON
+    nome_bacia = data.pop('bacia')
+
+    # Buscar pela bacia existente
+    bacia = BaciaHidroModel.query.filter_by(nome=nome_bacia).first()
+
     estado = EstadoModel(**data)
+
+    # Utilizamos o relationship criado em BaciaHidroModel para relacionar
+    # facilmente um objeto do tipo BaciaHidroModel a um objeto do tipo EstadoModel
+    estado.bacias.append(bacia)
 
     session.add(estado)
     session.commit()
@@ -34,4 +45,5 @@ def create_estado():
         "populacao": estado.populacao,
         "area": float(estado.area),
         "regiao": estado.regiao.nome,
+        "bacia": estado.bacias
     }), 201

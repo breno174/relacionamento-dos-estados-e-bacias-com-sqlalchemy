@@ -13,3 +13,6 @@ def init_app(app: Flask):
     from app.models.estado_model import EstadoModel
     from app.models.capital_model import CapitalModel
     from app.models.regiao_model import RegiaoModel
+    # Declarando a model e a tabela pivo
+    from app.models.bacia_hidro_model import BaciaHidroModel
+    from app.models.bacia_estado_table import bacias_estados
